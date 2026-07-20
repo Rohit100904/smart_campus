@@ -25,6 +25,7 @@ import numpy as np
 import face_recognition
 from datetime import datetime
 from werkzeug.utils import secure_filename
+import os
 
 from FaceRecognition.main import generate_frames, get_current_student
 

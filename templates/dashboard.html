@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Campus | Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard">
+
+        <!-- ==========================
+            Sidebar
+    =========================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-header">
+
+                <i class="fa-solid fa-building-columns"></i>
+
+                <h2>Smart Campus</h2>
+
+            </div>
+
+            <ul class="menu">
+
+                <li class="active">
+
+                    <a href="{{ url_for('dashboard') }}">
+
+                        <i class="fa-solid fa-house"></i> Dashboard
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('attendance') }}">
+
+                        <i class="fa-solid fa-camera"></i> Attendance
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('report') }}">
+
+                        <i class="fa-solid fa-chart-column"></i> Attendance Report
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('materials') }}">
+
+                        <i class="fa-solid fa-book-open"></i> Learning Materials
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('emergency') }}">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i> Emergency Alert
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('profile') }}">
+
+                        <i class="fa-solid fa-user"></i> Profile
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('logout') }}">
+
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </aside>
+
+        <!-- ==========================
+            Main Content
+    =========================== -->
+
+        <main class="main-content">
+
+            <!-- Top Navigation -->
+
+            <header class="topbar">
+
+                <div>
+
+                    <h1>
+
+                        Dashboard
+
+                    </h1>
+
+                    <p>
+
+                        Welcome back, Student 👋
+
+                    </p>
+
+                </div>
+
+                <div class="top-icons">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <img src="{{ url_for('static',
+filename='images/' + student['profile_image']) }}" class="profile-pic">
+
+                </div>
+
+            </header>
+
+            <!-- ==========================
+                Dashboard Cards
+        =========================== -->
+
+            <section class="cards">
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Attendance</h3>
+
+                        <h2>92%</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-user-check"></i>
+
+                </div>
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Assignments</h3>
+
+                        <h2>08</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-book"></i>
+
+                </div>
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Materials</h3>
+
+                        <h2>54</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-folder-open"></i>
+
+                </div>
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Alerts</h3>
+
+                        <h2>02</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+            </section>
+            <!-- ==========================
+                Dashboard Content
+        =========================== -->
+
+            <div class="dashboard-grid">
+
+                <!-- Left Section -->
+
+                <div class="left-content">
+
+                    <!-- Attendance Table -->
+
+                    <div class="dashboard-box">
+
+                        <div class="box-header">
+
+                            <h2>Recent Attendance</h2>
+
+                            <a href="{{ url_for('report') }}">View All</a>
+
+                        </div>
+
+                        <table class="attendance-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Date</th>
+
+                                    <th>Subject</th>
+
+                                    <th>Status</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>18 Jul 2026</td>
+
+                                    <td>Machine Learning</td>
+
+                                    <td>
+
+                                        <span class="status present">
+
+                                        Present
+
+                                    </span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>17 Jul 2026</td>
+
+                                    <td>Cyber Security</td>
+
+                                    <td>
+
+                                        <span class="status present">
+
+                                        Present
+
+                                    </span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>16 Jul 2026</td>
+
+                                    <td>Cloud Computing</td>
+
+                                    <td>
+
+                                        <span class="status absent">
+
+                                        Absent
+
+                                    </span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>15 Jul 2026</td>
+
+                                    <td>Artificial Intelligence</td>
+
+                                    <td>
+
+                                        <span class="status present">
+
+                                        Present
+
+                                    </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <!-- Today's Timetable -->
+
+                    <div class="dashboard-box">
+
+                        <div class="box-header">
+
+                            <h2>Today's Timetable</h2>
+
+                        </div>
+
+                        <div class="schedule-item">
+
+                            <span>09:00 AM</span>
+
+                            <div>
+
+                                <h4>Machine Learning</h4>
+
+                                <p>Room 401</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="schedule-item">
+
+                            <span>11:00 AM</span>
+
+                            <div>
+
+                                <h4>Computer Networks</h4>
+
+                                <p>Room 307</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="schedule-item">
+
+                            <span>02:00 PM</span>
+
+                            <div>
+
+                                <h4>Project Lab</h4>
+
+                                <p>Innovation Lab</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Right Section -->
+
+                <div class="right-content">
+
+                    <!-- Notifications -->
+
+                    <div class="dashboard-box">
+
+                        <div class="box-header">
+
+                            <h2>Notifications</h2>
+
+                        </div>
+
+                        <div class="notification">
+
+                            <i class="fa-solid fa-bell"></i>
+
+                            <div>
+
+                                <h4>Assignment Uploaded</h4>
+
+                                <p>Machine Learning Assignment 4</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="notification">
+
+                            <i class="fa-solid fa-book"></i>
+
+                            <div>
+
+                                <h4>New Notes Available</h4>
+
+                                <p>Cloud Computing Unit 5</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="notification">
+
+                            <i class="fa-solid fa-user-check"></i>
+
+                            <div>
+
+                                <h4>Attendance Updated</h4>
+
+                                <p>Your attendance has been marked.</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Announcements -->
+
+                    <div class="dashboard-box">
+
+                        <div class="box-header">
+
+                            <h2>Announcements</h2>
+
+                        </div>
+
+                        <ul class="announcement-list">
+
+                            <li>
+
+                                Mid Semester Examination starts on 5 August.
+
+                            </li>
+
+                            <li>
+
+                                AI Workshop Registration is now open.
+
+                            </li>
+
+                            <li>
+
+                                Project Presentation on Friday.
+
+                            </li>
+
+                            <li>
+
+                                Campus Hackathon next month.
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- Quick Actions -->
+
+                    <div class="dashboard-box">
+
+                        <div class="box-header">
+
+                            <h2>Quick Actions</h2>
+
+                        </div>
+
+                        <div class="quick-actions">
+
+                            <a href="{{ url_for('attendance') }}" class="action-btn">
+
+                                <i class="fa-solid fa-camera"></i> Mark Attendance
+
+                            </a>
+
+                            <a href="{{ url_for('materials') }}" class="action-btn">
+
+                                <i class="fa-solid fa-book-open"></i> View Notes
+
+                            </a>
+
+                            <a href="{{ url_for('emergency') }}" class="action-btn emergency-btn">
+
+                                <i class="fa-solid fa-triangle-exclamation"></i> Emergency
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- ==========================
+                Bottom Section
+        =========================== -->
+
+            <div class="bottom-grid">
+
+                <!-- Attendance Progress -->
+
+                <div class="dashboard-box">
+
+                    <div class="box-header">
+
+                        <h2>Attendance Progress</h2>
+
+                    </div>
+
+                    <div class="progress-container">
+
+                        <div class="progress-item">
+
+                            <span>Machine Learning</span>
+
+                            <div class="progress-bar">
+
+                                <div class="progress-fill" style="width:95%">
+
+                                    95%
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress-item">
+
+                            <span>Computer Networks</span>
+
+                            <div class="progress-bar">
+
+                                <div class="progress-fill" style="width:88%">
+
+                                    88%
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress-item">
+
+                            <span>Cyber Security</span>
+
+                            <div class="progress-bar">
+
+                                <div class="progress-fill" style="width:90%">
+
+                                    90%
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress-item">
+
+                            <span>Cloud Computing</span>
+
+                            <div class="progress-bar">
+
+                                <div class="progress-fill" style="width:84%">
+
+                                    84%
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Student Profile -->
+
+                <div class="dashboard-box student-card">
+
+                    <img src="{{ url_for('static', filename='images/' + student['profile_image']) }}" class="student-photo">
+
+                    <h2>{{ student['name'] }}</h2>
+
+                    <p>{{ student['course'] }}</p>
+
+                    <hr>
+
+                    <div class="student-details">
+
+                        <div>
+
+                            <span>Roll No</span>
+
+                            <strong>{{ student['student_id'] }}</strong>
+                        </div>
+
+                        <div>
+
+                            <span>Semester</span>
+
+                            <strong>{{ student['semester'] }}</strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>CGPA</span>
+
+                            <strong>{{ student['cgpa'] }}</strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>Attendance</span>
+
+                            <strong>{{ student['attendance'] }}%</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ==========================
+                Upcoming Events
+        =========================== -->
+
+            <section class="dashboard-box">
+
+                <div class="box-header">
+
+                    <h2>Upcoming Events</h2>
+
+                    <a href="#">View Calendar</a>
+
+                </div>
+
+                <div class="events">
+
+                    <div class="event-card">
+
+                        <h3>AI Workshop</h3>
+
+                        <p>22 July 2026</p>
+
+                    </div>
+
+                    <div class="event-card">
+
+                        <h3>Project Review</h3>
+
+                        <p>26 July 2026</p>
+
+                    </div>
+
+                    <div class="event-card">
+
+                        <h3>Hackathon</h3>
+
+                        <p>05 August 2026</p>
+
+                    </div>
+
+                    <div class="event-card">
+
+                        <h3>Semester Exam</h3>
+
+                        <p>10 August 2026</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ==========================
+                Activity Timeline
+        =========================== -->
+
+            <section class="dashboard-box">
+
+                <div class="box-header">
+
+                    <h2>Recent Activities</h2>
+
+                </div>
+
+                <div class="timeline">
+
+                    <div class="timeline-item">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <div>
+
+                            <h4>Attendance Marked</h4>
+
+                            <p>Today • 09:02 AM</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="timeline-item">
+
+                        <i class="fa-solid fa-book-open"></i>
+
+                        <div>
+
+                            <h4>New Study Material Added</h4>
+
+                            <p>Yesterday</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="timeline-item">
+
+                        <i class="fa-solid fa-file-circle-check"></i>
+
+                        <div>
+
+                            <h4>Assignment Submitted</h4>
+
+                            <p>2 Days Ago</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <footer class="dashboard-footer">
+
+        © 2026 Smart Campus Management System | Developed with Flask
+
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

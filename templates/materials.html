@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Study Materials</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: #F5F7FB;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: #7B1113;
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 45px;
+        }
+        
+        .logo i {
+            font-size: 30px;
+        }
+        
+        .logo h2 {
+            font-size: 24px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin: 12px 0;
+        }
+        
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            text-decoration: none;
+            padding: 14px 18px;
+            border-radius: 14px;
+            transition: .3s;
+        }
+        
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, .15);
+        }
+        
+        .active a {
+            background: white;
+            color: #7B1113;
+        }
+        
+        .main {
+            flex: 1;
+            padding: 35px;
+        }
+        
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+        
+        .topbar h1 {
+            font-size: 34px;
+            color: #222;
+        }
+        
+        .topbar p {
+            color: #666;
+            margin-top: 8px;
+        }
+        
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .search {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 50px;
+            padding: 12px 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+        }
+        
+        .search input {
+            border: none;
+            outline: none;
+            margin-left: 10px;
+            width: 240px;
+            background: transparent;
+        }
+        
+        #uploadBtn {
+            border: none;
+            background: #7B1113;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: .3s;
+        }
+        
+        #uploadBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(123, 17, 19, .35);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
+            transition: .35s;
+            cursor: pointer;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .12);
+        }
+        
+        .icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 28px;
+        }
+        
+        .blue {
+            background: linear-gradient(135deg, #2563EB, #3B82F6);
+        }
+        
+        .red {
+            background: linear-gradient(135deg, #B91C1C, #EF4444);
+        }
+        
+        .orange {
+            background: linear-gradient(135deg, #F59E0B, #FBBF24);
+        }
+        
+        .green {
+            background: linear-gradient(135deg, #059669, #10B981);
+        }
+        
+        .details h2 {
+            font-size: 34px;
+            color: #222;
+        }
+        
+        .details p {
+            font-size: 16px;
+            margin-top: 5px;
+            color: #555;
+        }
+        
+        .details small {
+            color: #999;
+        }
+        
+        @media(max-width:1200px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media(max-width:700px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .45);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        
+        .modal-content {
+            width: 650px;
+            max-width: 92%;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            animation: popup .35s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+        }
+        
+        @keyframes popup {
+            from {
+                opacity: 0;
+                transform: scale(.85);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .modal-header h2 {
+            color: #7B1113;
+        }
+        
+        .close {
+            font-size: 34px;
+            cursor: pointer;
+            color: #999;
+            transition: .3s;
+        }
+        
+        .close:hover {
+            color: #7B1113;
+            transform: rotate(90deg);
+        }
+        
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .input-group label {
+            font-weight: 600;
+            color: #444;
+        }
+        
+        .input-group input,
+        .input-group textarea {
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            outline: none;
+            font-size: 15px;
+            transition: .3s;
+        }
+        
+        .input-group input:focus,
+        .input-group textarea:focus {
+            border-color: #7B1113;
+            box-shadow: 0 0 0 4px rgba(123, 17, 19, .1);
+        }
+        
+        .upload-box {
+            border: 2px dashed #7B1113;
+            border-radius: 18px;
+            padding: 35px;
+            text-align: center;
+            transition: .3s;
+        }
+        
+        .upload-box:hover {
+            background: #faf5f5;
+        }
+        
+        .upload-box i {
+            font-size: 50px;
+            color: #7B1113;
+            margin-bottom: 15px;
+        }
+        
+        .browse-btn {
+            display: inline-block;
+            margin-top: 15px;
+            background: #7B1113;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: .3s;
+        }
+        
+        .browse-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .upload-submit {
+            border: none;
+            background: #7B1113;
+            color: white;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: .3s;
+        }
+        
+        .upload-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(123, 17, 19, .35);
+        }
+        
+        .material-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+        }
+        
+        .material-card {
+            background: white;
+            border-radius: 22px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
+            transition: .35s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .material-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .12);
+        }
+        
+        .file-icon {
+            font-size: 65px;
+            margin-bottom: 20px;
+        }
+        
+        .pdf {
+            color: #DC2626;
+        }
+        
+        .ppt {
+            color: #EA580C;
+        }
+        
+        .word {
+            color: #2563EB;
+        }
+        
+        .zip {
+            color: #F59E0B;
+        }
+        
+        .file {
+            color: #6B7280;
+        }
+        
+        .material-info h3 {
+            font-size: 22px;
+            color: #222;
+            margin-bottom: 12px;
+        }
+        
+        .material-info p {
+            color: #666;
+            margin-bottom: 12px;
+        }
+        
+        .material-info small {
+            display: block;
+            color: #888;
+            line-height: 1.6;
+            min-height: 45px;
+        }
+        
+        .material-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        
+        .download-btn {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            background: #10B981;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            transition: .3s;
+        }
+        
+        .download-btn:hover {
+            background: #059669;
+        }
+        
+        .delete-btn {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            background: #EF4444;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            transition: .3s;
+        }
+        
+        .delete-btn:hover {
+            background: #B91C1C;
+        }
+        
+        .empty-state {
+            background: white;
+            border-radius: 25px;
+            padding: 80px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
+        }
+        
+        .empty-state i {
+            font-size: 90px;
+            color: #7B1113;
+            margin-bottom: 25px;
+        }
+        
+        .empty-state h2 {
+            color: #333;
+            margin-bottom: 12px;
+        }
+        
+        .empty-state p {
+            color: #777;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        button {
+            font-family: inherit;
+        }
+        
+        a {
+            font-family: inherit;
+        }
+        
+         ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: #7B1113;
+            border-radius: 20px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: #eee;
+        }
+        
+        .material-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .material-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background: #7B1113;
+        }
+        
+        .material-card:hover .file-icon {
+            transform: scale(1.15) rotate(-8deg);
+        }
+        
+        .file-icon {
+            transition: .35s;
+        }
+        
+        .download-btn,
+        .delete-btn {
+            font-weight: 600;
+        }
+        
+        input::placeholder,
+        textarea::placeholder {
+            color: #999;
+        }
+        
+        .upload-box {
+            cursor: pointer;
+        }
+        
+        .upload-box:hover {
+            transform: scale(1.02);
+        }
+        
+        #uploadBtn:active {
+            transform: scale(.96);
+        }
+        
+        .stat-card:active {
+            transform: scale(.98);
+        }
+        
+        .material-card:active {
+            transform: scale(.98);
+        }
+        
+        @media(max-width:900px) {
+            .sidebar {
+                width: 90px;
+            }
+            .sidebar h2 {
+                display: none;
+            }
+            .sidebar a {
+                justify-content: center;
+            }
+            .sidebar a i {
+                margin: 0;
+            }
+            .sidebar a span {
+                display: none;
+            }
+            .main {
+                padding: 20px;
+            }
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            .top-actions {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search {
+                width: 100%;
+            }
+            .search input {
+                width: 100%;
+            }
+        }
+        
+        @media(max-width:600px) {
+            .material-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- ================= Sidebar ================= -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+                <h2>Smart Campus</h2>
+
+            </div>
+
+            <ul>
+
+                <li>
+                    <a href="{{ url_for('dashboard') }}">
+                        <i class="fa-solid fa-house"></i> Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('attendance') }}">
+                        <i class="fa-solid fa-camera"></i> Attendance
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('report') }}">
+                        <i class="fa-solid fa-chart-column"></i> Reports
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="{{ url_for('materials') }}">
+                        <i class="fa-solid fa-book-open"></i> Materials
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('profile') }}">
+                        <i class="fa-solid fa-user"></i> Profile
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('emergency') }}">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Emergency
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('logout') }}">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+
+        </aside>
+
+        <!-- ================= Main ================= -->
+
+        <main class="main">
+
+            <!-- Header -->
+
+            <div class="topbar">
+
+                <div>
+
+                    <h1>Learning Materials</h1>
+
+                    <p>
+
+                        Organize all your study resources in one secure place.
+
+                    </p>
+
+                </div>
+
+                <div class="top-actions">
+
+                    <div class="search">
+
+                        <i class="fa-solid fa-search"></i>
+
+                        <input type="text" id="searchInput" placeholder="Search materials...">
+
+                    </div>
+
+                    <button id="uploadBtn">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    Upload Material
+
+                </button>
+
+                </div>
+
+            </div>
+
+            <!-- Statistics -->
+
+            <section class="stats">
+
+                <div class="stat-card">
+
+                    <div class="icon blue">
+
+                        <i class="fa-solid fa-folder"></i>
+
+                    </div>
+
+                    <div class="details">
+
+                        <h2>{{ materials|length }}</h2>
+
+                        <p>Total Materials</p>
+
+                        <small>Available Resources</small>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="icon red">
+
+                        <i class="fa-solid fa-file-pdf"></i>
+
+                    </div>
+
+                    <div class="details">
+
+                        <h2>24</h2>
+
+                        <p>PDF Notes</p>
+
+                        <small>Study Documents</small>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="icon orange">
+
+                        <i class="fa-solid fa-file-powerpoint"></i>
+
+                    </div>
+
+                    <div class="details">
+
+                        <h2>15</h2>
+
+                        <p>Presentations</p>
+
+                        <small>Slides & PPTs</small>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="icon green">
+
+                        <i class="fa-solid fa-download"></i>
+
+                    </div>
+
+                    <div class="details">
+
+                        <h2>320</h2>
+
+                        <p>Downloads</p>
+
+                        <small>Student Downloads</small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Upload Modal -->
+
+            <section id="uploadModal" class="modal">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+
+                        <h2>
+
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Upload Learning Material
+
+                        </h2>
+
+                        <span class="close">&times;</span>
+
+                    </div>
+
+                    <form action="{{ url_for('upload_material') }}" method="POST" enctype="multipart/form-data" class="upload-form">
+
+                        <div class="input-group">
+
+                            <label>Material Title</label>
+
+                            <input type="text" name="title" placeholder="Enter material title" required>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label>Subject</label>
+
+                            <input type="text" name="subject" placeholder="Enter subject" required>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label>Description</label>
+
+                            <textarea name="description" rows="4" placeholder="Write a short description..."></textarea>
+
+                        </div>
+
+                        <div class="upload-box">
+
+                            <i class="fa-solid fa-file-arrow-up"></i>
+
+                            <h3>Drag & Drop Files</h3>
+
+                            <p>or</p>
+
+                            <label class="browse-btn">
+
+                    Browse Files
+
+                    <input
+                        type="file"
+                        name="file"
+                        required
+                        hidden
+                    >
+
+                </label>
+
+                        </div>
+
+                        <button type="submit" class="upload-submit">
+
+                <i class="fa-solid fa-upload"></i>
+
+                Upload Material
+
+            </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+            <!-- Material Cards -->
+
+            <section class="materials">
+
+                {% if materials %}
+
+                <div class="material-grid">
+
+                    {% for material in materials %}
+
+                    <div class="material-card">
+
+                        <div class="file-icon">
+
+                            {% if material.filename.endswith('.pdf') %}
+
+                            <i class="fa-solid fa-file-pdf pdf"></i> {% elif material.filename.endswith('.ppt') or material.filename.endswith('.pptx') %}
+
+                            <i class="fa-solid fa-file-powerpoint ppt"></i> {% elif material.filename.endswith('.doc') or material.filename.endswith('.docx') %}
+
+                            <i class="fa-solid fa-file-word word"></i> {% elif material.filename.endswith('.zip') %}
+
+                            <i class="fa-solid fa-file-zipper zip"></i> {% else %}
+
+                            <i class="fa-solid fa-file file"></i> {% endif %}
+
+                        </div>
+
+                        <div class="material-info">
+
+                            <h3>{{ material.title }}</h3>
+
+                            <p>
+
+                                <i class="fa-solid fa-book"></i> {{ material.subject }}
+
+                            </p>
+
+                            {% if material.description %}
+
+                            <small>
+
+            {{ material.description }}
+
+        </small> {% endif %}
+
+                        </div>
+
+                        <div class="material-actions">
+
+                            <a href="{{ url_for('static', filename='uploads/' + material.filename) }}" download></a>
+
+                            <i class="fa-solid fa-download"></i> Download
+
+                            </a>
+
+                            <a href="{{ url_for('delete_material', id=material.id) }}" class="delete-btn" onclick="return confirm('Delete this material?')">
+
+                                <i class="fa-solid fa-trash"></i> Delete
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-folder-open"></i>
+
+                    <h2>No Materials Found</h2>
+
+                    <p>
+
+                        Upload your first study material to get started.
+
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </section>
+        </main>
+
+    </div>
+
+    <script>
+        const modal = document.getElementById("uploadModal");
+        const btn = document.getElementById("uploadBtn");
+        const closeBtn = document.querySelector(".close");
+
+        btn.onclick = () => {
+            modal.style.display = "flex";
+        }
+
+        closeBtn.onclick = () => {
+            modal.style.display = "none";
+        }
+
+        window.onclick = (e) => {
+            if (e.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        const searchInput = document.getElementById("searchInput");
+
+        searchInput.addEventListener("keyup", function() {
+
+            const filter = this.value.toLowerCase();
+
+            const cards = document.querySelectorAll(".material-card");
+
+            cards.forEach(card => {
+
+                const text = card.innerText.toLowerCase();
+
+                if (text.includes(filter)) {
+
+                    card.style.display = "flex";
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+        });
+
+        const uploadForm = document.querySelector(".upload-form");
+
+        uploadForm.addEventListener("submit", function() {
+
+            const submitBtn = document.querySelector(".upload-submit");
+
+            submitBtn.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
+
+            submitBtn.disabled = true;
+
+        });
+    </script>
+
+</body>
+
+</html>

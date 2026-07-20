@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Campus | Attendance</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard">
+
+        <!-- ================= Sidebar ================= -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-header">
+
+                <i class="fa-solid fa-building-columns"></i>
+
+                <h2>Smart Campus</h2>
+
+            </div>
+
+            <ul class="menu">
+
+                <li>
+
+                    <a href="{{ url_for('dashboard') }}">
+
+                        <i class="fa-solid fa-house"></i> Dashboard
+
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="{{ url_for('attendance') }}">
+
+                        <i class="fa-solid fa-camera"></i> Attendance
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('report') }}">
+
+                        <i class="fa-solid fa-chart-column"></i> Attendance Report
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('materials') }}">
+
+                        <i class="fa-solid fa-book-open"></i> Learning Materials
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('emergency') }}">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i> Emergency Alert
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('profile') }}">
+
+                        <i class="fa-solid fa-user"></i> Profile
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('logout') }}">
+
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </aside>
+
+        <!-- ================= Main Content ================= -->
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+
+                    <h1>
+
+                        Face Recognition Attendance
+
+                    </h1>
+
+                    <p>
+
+                        Mark attendance using AI Face Recognition
+
+                    </p>
+
+                </div>
+
+            </header>
+
+            <!-- ================= Statistics ================= -->
+
+            <section class="cards">
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Total Students</h3>
+
+                        <h2>{{ stats.students }}</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Present</h3>
+
+                        <h2>{{ stats.present }}</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-user-check"></i>
+
+                </div>
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Absent</h3>
+
+                        <h2>{{ stats.absent }}</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-user-xmark"></i>
+
+                </div>
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Attendance</h3>
+
+                        <h2>{{ stats.percentage }}%</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-chart-pie"></i>
+
+                </div>
+
+            </section>
+
+            <!-- ================= Camera Section ================= -->
+
+            <div class="attendance-grid">
+
+                <div class="dashboard-box">
+
+                    <div class="box-header">
+
+                        <h2>
+
+                            Live Camera
+
+                        </h2>
+
+                    </div>
+
+                    <div class="camera-box">
+
+                        <img src="{{ url_for('video_feed') }}" class="camera-feed" id="video-stream">
+
+                    </div>
+
+                    <div class="camera-buttons">
+
+                        <button class="login-btn">
+
+                        <i class="fa-solid fa-play"></i>
+
+                        Start Camera
+
+                    </button>
+
+                        <button class="google-btn">
+
+                        <i class="fa-solid fa-stop"></i>
+
+                        Stop Camera
+
+                    </button>
+
+                    </div>
+
+                </div>
+
+                <!-- Student Information -->
+
+                <div class="dashboard-box">
+
+                    <div class="box-header">
+
+                        <h2>
+
+                            Student Details
+
+                        </h2>
+
+                    </div>
+
+                    <div class="student-preview">
+
+                        <img id="student-image" src="{{ url_for('static', filename='images/' + student.profile_image) }}" class="student-photo">
+                        <h2 id="student-name">
+
+                            {{ student.name }}
+
+                        </h2>
+
+                        <p id="student-department">
+
+                            {{ student.department }}
+
+                        </p>
+
+                        <hr>
+
+                        <div class="student-details">
+
+                            <div>
+
+                                <span>ID</span>
+
+                                <strong id="student-id">
+
+{{ student.student_id }}
+
+</strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>Semester</span>
+
+                                <strong id="student-semester">
+
+{{ student.semester }}
+
+</strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>Attendance</span>
+
+                                <strong id="student-attendance">
+
+{{ stats.percentage }}%
+
+</strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>Status</span>
+
+                                <strong class="text-success" id="student-status">
+
+Waiting
+
+</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- ===============================
+                Attendance History
+        ================================ -->
+
+            <div class="dashboard-box mt-20">
+
+                <div class="box-header">
+
+                    <h2>
+
+                        Today's Attendance Log
+
+                    </h2>
+
+                    <a href="{{ url_for('report') }}">
+
+                    View Full Report
+
+                </a>
+
+                </div>
+
+                <table class="attendance-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Student ID</th>
+
+                            <th>Name</th>
+
+                            <th>Time</th>
+
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="attendance-table">
+
+                        {% for record in records %}
+
+                        <tr>
+
+                            <td>{{ record.student_id }}</td>
+
+                            <td>{{ record.name }}</td>
+
+                            <td>{{ record.time }}</td>
+
+                            <td>
+
+                                <span class="status present">
+
+            {{ record.status }}
+
+        </span>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- ===============================
+                Quick Actions
+        ================================ -->
+
+            <div class="dashboard-grid mt-20">
+
+                <div class="dashboard-box">
+
+                    <div class="box-header">
+
+                        <h2>
+
+                            Camera Status
+
+                        </h2>
+
+                    </div>
+
+                    <div class="notification">
+
+                        <i class="fa-solid fa-video"></i>
+
+                        <div>
+
+                            <h4>
+
+                                Camera Connected
+
+                            </h4>
+
+                            <p>
+
+                                Waiting for Face Detection...
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="notification">
+
+                        <i class="fa-solid fa-brain"></i>
+
+                        <div>
+
+                            <h4>
+
+                                Face Recognition
+
+                            </h4>
+
+                            <p>
+
+                                AI Model Loaded Successfully
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="notification">
+
+                        <i class="fa-solid fa-database"></i>
+
+                        <div>
+
+                            <h4>
+
+                                Attendance Database
+
+                            </h4>
+
+                            <p>
+
+                                Connected Successfully
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-box">
+
+                    <div class="box-header">
+
+                        <h2>
+
+                            Quick Actions
+
+                        </h2>
+
+                    </div>
+
+                    <div class="quick-actions">
+
+                        <button class="action-btn">
+
+                        <i class="fa-solid fa-camera"></i>
+
+                        Scan Face
+
+                    </button>
+
+                        <button class="action-btn">
+
+                        <i class="fa-solid fa-rotate"></i>
+
+                        Refresh Camera
+
+                    </button>
+
+                        <a href="{{ url_for('report') }}" class="action-btn">
+
+                            <i class="fa-solid fa-file-lines"></i> Attendance Report
+
+                        </a>
+
+                        <button class="action-btn emergency-btn">
+
+                        <i class="fa-solid fa-download"></i>
+
+                        Export CSV
+
+                    </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===============================
+                Summary Cards
+        ================================ -->
+
+            <section class="cards mt-20">
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Late Entries</h3>
+
+                        <h2>08</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-clock"></i>
+
+                </div>
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Recognition Accuracy</h3>
+
+                        <h2>99%</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-face-smile"></i>
+
+                </div>
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>Unknown Faces</h3>
+
+                        <h2>01</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-user-secret"></i>
+
+                </div>
+
+                <div class="card">
+
+                    <div>
+
+                        <h3>System Status</h3>
+
+                        <h2>Online</h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <footer class="dashboard-footer">
+
+        © 2026 Smart Campus Management System
+
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <script>
+        function loadAttendance() {
+
+            fetch("/attendance_log")
+
+            .then(res => res.json())
+
+            .then(data => {
+
+                let html = "";
+
+                data.forEach(record => {
+
+                    html += `
+            <tr>
+
+                <td>${record.student_id}</td>
+
+                <td>${record.name}</td>
+
+                <td>${record.time}</td>
+
+                <td>
+
+                    <span class="status present">
+
+                        ${record.status}
+
+                    </span>
+
+                </td>
+
+            </tr>
+            `;
+
+                });
+
+                document.getElementById("attendance-table").innerHTML = html;
+
+            });
+
+        }
+
+        function loadStudent() {
+
+            fetch("/current_student")
+
+            .then(res => res.json())
+
+            .then(data => {
+
+                if (data.student_id) {
+
+                    document.getElementById("student-name").innerHTML = data.name;
+
+                    document.getElementById("student-id").innerHTML = data.student_id;
+
+                    document.getElementById("student-department").innerHTML = data.department;
+
+                    document.getElementById("student-semester").innerHTML = data.semester;
+
+                    document.getElementById("student-status").innerHTML = "Present";
+
+                    document.getElementById("student-image").src =
+                        "/static/images/" + data.profile_image;
+
+                }
+
+            });
+
+        }
+
+        loadAttendance();
+
+        loadStudent();
+
+        setInterval(loadAttendance, 2000);
+
+        setInterval(loadStudent, 1000);
+    </script>
+
+
+
+</body>
+
+</html>

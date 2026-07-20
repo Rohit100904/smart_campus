@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Profile</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: #F5F7FB;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: #7B1113;
+            color: white;
+            padding: 30px 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        
+        .logo i {
+            font-size: 30px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin: 12px 0;
+        }
+        
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 18px;
+            border-radius: 14px;
+            transition: .3s;
+        }
+        
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, .15);
+        }
+        
+        .active a {
+            background: white;
+            color: #7B1113;
+        }
+        
+        .main {
+            flex: 1;
+            padding: 35px;
+        }
+        
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .edit-btn {
+            background: #7B1113;
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+        }
+        
+        .profile-image img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #7B1113;
+            object-fit: cover;
+        }
+        
+        .profile-details h2 {
+            margin-bottom: 15px;
+        }
+        
+        .profile-details p {
+            margin: 8px 0;
+            color: #555;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 35px;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+            transition: .3s;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .12);
+        }
+        
+        .info-card i {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: #7B1113;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+        
+        .info-card h3 {
+            margin-bottom: 6px;
+            color: #333;
+        }
+        
+        .info-card p {
+            color: #666;
+            word-break: break-word;
+        }
+        
+        @media(max-width:768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .academic-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .academic-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+            transition: .35s;
+        }
+        
+        .academic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
+        }
+        
+        .academic-card i {
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            border-radius: 50%;
+            background: #7B1113;
+            color: white;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .academic-card h3 {
+            color: #444;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .academic-card p {
+            font-size: 22px;
+            font-weight: 600;
+            color: #7B1113;
+        }
+        
+        @media(max-width:1000px) {
+            .academic-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media(max-width:650px) {
+            .academic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+            transition: .35s;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-8px);
+        }
+        
+        .stat-box i {
+            font-size: 40px;
+            color: #7B1113;
+            margin-bottom: 18px;
+        }
+        
+        .stat-box h2 {
+            font-size: 34px;
+            color: #222;
+        }
+        
+        .stat-box p {
+            margin-top: 8px;
+            color: #666;
+        }
+        
+        .activity-card {
+            margin-top: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+        }
+        
+        .activity-card h2 {
+            margin-bottom: 25px;
+            color: #7B1113;
+        }
+        
+        .activity-card ul {
+            list-style: none;
+        }
+        
+        .activity-card li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+        
+        .activity-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-card li i {
+            color: #7B1113;
+            font-size: 20px;
+        }
+        
+        @media(max-width:1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media(max-width:650px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h2>Smart Campus</h2>
+            </div>
+
+            <ul>
+
+                <li><a href="{{ url_for('dashboard') }}"><i class="fa-solid fa-house"></i>Dashboard</a></li>
+
+                <li><a href="{{ url_for('attendance') }}"><i class="fa-solid fa-camera"></i>Attendance</a></li>
+
+                <li><a href="{{ url_for('materials') }}"><i class="fa-solid fa-book-open"></i>Materials</a></li>
+
+                <li class="active"><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user"></i>Profile</a></li>
+
+                <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+
+            </ul>
+
+        </aside>
+
+        <main class="main">
+
+            <div class="topbar">
+
+                <div>
+
+                    <h1>Student Profile</h1>
+
+                    <p>Manage your personal information</p>
+
+                </div>
+
+                <button class="edit-btn">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit Profile
+
+            </button>
+
+            </div>
+
+            <div class="profile-card">
+
+                <div class="profile-image">
+
+                    <img src="{{ url_for('static', filename='images/' + student.profile_image) }}">
+
+                </div>
+
+                <div class="profile-details">
+
+                    <h2>{{ student.name }}</h2>
+
+                    <p><i class="fa-solid fa-id-card"></i> Student ID : {{ student.student_id }}</p>
+
+                    <p><i class="fa-solid fa-building-columns"></i> Department : {{ student.department }}</p>
+
+                    <p><i class="fa-solid fa-graduation-cap"></i> Semester : {{ student.semester }}</p>
+
+                </div>
+                <!-- Personal Information -->
+
+                <section class="info-grid">
+
+                    <div class="info-card">
+
+                        <i class="fa-solid fa-envelope"></i>
+
+                        <div>
+
+                            <h3>Email</h3>
+
+                            <p>{{ student.email if student else "student@example.com" }}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="info-card">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <div>
+
+                            <h3>Phone</h3>
+
+                            <p>{{ student.phone if student else "+91 9876543210" }}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="info-card">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <div>
+
+                            <h3>Address</h3>
+
+                            <p>{{ student.address if student else "Kolkata, India" }}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="info-card">
+
+                        <i class="fa-solid fa-cake-candles"></i>
+
+                        <div>
+
+                            <h3>Date of Birth</h3>
+
+                            <p>{{ student.dob if student else "10 Sep 2004" }}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="info-card">
+
+                        <i class="fa-solid fa-venus-mars"></i>
+
+                        <div>
+
+                            <h3>Gender</h3>
+
+                            <p>{{ student.gender if student else "Male" }}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="info-card">
+
+                        <i class="fa-solid fa-droplet"></i>
+
+                        <div>
+
+                            <h3>Blood Group</h3>
+
+                            <p>{{ student.blood_group if student else "O+" }}</p>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+            </div>
+            <section class="academic-grid">
+
+                <div class="academic-card">
+
+                    <i class="fa-solid fa-id-badge"></i>
+
+                    <h3>Roll Number</h3>
+
+                    <p>{{ student.student_id }}</p>
+
+                </div>
+
+                <div class="academic-card">
+
+                    <i class="fa-solid fa-address-card"></i>
+
+                    <h3>Registration No.</h3>
+
+                    <p>{{ student.registration if student else "22010101001" }}</p>
+
+                </div>
+
+                <div class="academic-card">
+
+                    <i class="fa-solid fa-building-columns"></i>
+
+                    <h3>Department</h3>
+
+                    <p>{{ student.department if student else "Computer Science & Engineering" }}</p>
+
+                </div>
+
+                <div class="academic-card">
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    <h3>Current Semester</h3>
+
+                    <p>{{ student.semester if student else "8" }}</p>
+
+                </div>
+
+                <div class="academic-card">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    <h3>CGPA</h3>
+
+                    <p>{{ student.cgpa if student else "8.20" }}</p>
+
+                </div>
+
+                <!-- <div class="academic-card">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+
+                    <h3>Attendance</h3>
+
+                    <p>{{ student.attendance if student else "92%" }}</p>
+
+                </div> -->
+
+            </section>
+
+            <!-- ================= Statistics ================= -->
+
+            <section class="stats-grid">
+
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+
+                    <h2>{{ student.attendance }}%</h2>
+
+                    <p>Attendance</p>
+
+                </div>
+
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-book"></i>
+
+                    <h2>24</h2>
+
+                    <p>Materials</p>
+
+                </div>
+
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    <h2>18</h2>
+
+                    <p>Reports</p>
+
+                </div>
+
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    <h2>6</h2>
+
+                    <p>Subjects</p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= Recent Activity ================= -->
+
+            <section class="activity-card">
+
+                <h2>
+
+                    <i class="fa-solid fa-clock-rotate-left"></i> Recent Activity
+
+                </h2>
+
+                <ul>
+
+                    <li>
+
+                        <i class="fa-solid fa-circle-check"></i> Attendance marked successfully
+
+                    </li>
+
+                    <li>
+
+                        <i class="fa-solid fa-file-arrow-up"></i> Uploaded Operating System Notes
+
+                    </li>
+
+                    <li>
+
+                        <i class="fa-solid fa-download"></i> Downloaded DBMS PPT
+
+                    </li>
+
+                    <li>
+
+                        <i class="fa-solid fa-user-pen"></i> Updated profile information
+
+                    </li>
+
+                </ul>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

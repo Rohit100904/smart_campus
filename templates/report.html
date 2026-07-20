@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Reports | Smart Campus</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="report-container">
+
+        <div class="report-header">
+
+            <div>
+                <h1><i class="fas fa-chart-bar"></i> Attendance Reports</h1>
+                <p>Monitor student attendance and generate reports.</p>
+            </div>
+
+            <a href="{{ url_for('dashboard') }}" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- SUMMARY CARDS -->
+
+        <div class="report-cards">
+
+            <div class="report-card">
+                <i class="fas fa-user-graduate"></i>
+                <h2>4</h2>
+                <p>Total Students</p>
+            </div>
+
+            <div class="report-card">
+                <i class="fas fa-user-check"></i>
+                <h2>4</h2>
+                <p>Present Today</p>
+            </div>
+
+            <div class="report-card">
+                <i class="fas fa-user-times"></i>
+                <h2>0</h2>
+                <p>Absent Today</p>
+            </div>
+
+            <div class="report-card">
+                <i class="fas fa-chart-line"></i>
+                <h2>91%</h2>
+                <p>Average Attendance</p>
+            </div>
+
+        </div>
+
+
+        <!-- FILTER -->
+
+        <div class="report-filter">
+
+            <input type="date">
+
+            <button class="btn-maroon">
+            <i class="fas fa-search"></i>
+            Filter
+        </button>
+
+            <button class="btn-green">
+            <i class="fas fa-file-excel"></i>
+            Export Excel
+        </button>
+
+            <button class="btn-red">
+            <i class="fas fa-file-pdf"></i>
+            Export PDF
+        </button>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="table-container">
+
+            <table class="report-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Attendance %</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>220101001</td>
+                        <td>Arijit Saha</td>
+                        <td>CSBS</td>
+                        <td>92%</td>
+
+                        <td>
+                            <span class="status present">
+                            Present
+                        </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>220101002</td>
+                        <td>Esha Nandan</td>
+                        <td>CSBS</td>
+                        <td>95%</td>
+
+                        <td>
+                            <span class="status present">
+                            Present
+                        </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>220101003</td>
+                        <td>Priyangshu Tiwari</td>
+                        <td>CSBS</td>
+                        <td>90%</td>
+
+                        <td>
+                            <span class="status present">
+                            Present
+                        </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>220101004</td>
+                        <td>Gaurav Kumar Singh</td>
+                        <td>CSBS</td>
+                        <td>88%</td>
+
+                        <td>
+                            <span class="status present">
+                            Present
+                        </span>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
